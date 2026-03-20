@@ -25,7 +25,12 @@ app.mount("/static", static_file_directory, name="static")
 @app.get("/")
 def Home(request: Request, directory_exist: Optional[bool] = Query(default=False)):
 
-    directories = os.listdir(path="file_server_directory")
+    main_folder: str = "file_server_directory"
+
+    if not os.path.exists(main_folder):
+        os.makedirs(main_folder)
+
+    directories = os.listdir(path=main_folder)
 
     directories.sort()
 
